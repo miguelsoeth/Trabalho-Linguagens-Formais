@@ -1,0 +1,74 @@
+<div class="p-4">
+    <h2>Resolvedor de Gramática</h2>
+    <p>
+      Este gerador e resolvedor de gramática regular permite que você crie e valide gramáticas regulares de forma simples. 
+      Cada linha deve seguir o formato <strong>X-&gt;aB,C</strong>, onde:
+    </p>
+    <ul>
+      <li><strong>X</strong> é uma letra maiúscula representando uma variável (não-terminal);</li>
+      <li>Após a seta <code>-&gt;</code>, você pode escrever uma ou mais produções separadas por vírgula (<code>,</code>);</li>
+      <li>As produções podem conter letras minúsculas ou números (mas não ambos ao mesmo tempo);</li>
+      <li>Use o símbolo <code>~</code> para representar a produção vazia (epsilon);</li>
+      <li>A gramática deve conter pelo menos uma variável <code>S</code> como símbolo inicial;</li>
+    </ul>    
+    <p>
+      Você pode adicionar ou remover linhas para criar novas produções. Ao clicar em <strong>Gerar Gramática</strong>, o sistema irá validar a entrada e exibir o resultado da gramática resolvida com os possíveis passos de derivação.
+    </p>    
+    <p>
+      Também é possível gerar exemplos aleatórios clicando em <strong>Gerar Exemplo</strong>.
+    </p>
+  
+    <div
+      *ngFor="let linha of linhas; index as i; trackBy: trackByIndex"
+      class="flex items-center gap-2 mb-2"
+    >
+      <input
+        [name]="'linha' + i"
+        [(ngModel)]="linhas[i]"
+        [ngModelOptions]="{ standalone: true }"
+        type="text"
+        placeholder="Ex: S->bA,~"
+        class="border p-1 rounded w-full"
+      />
+      <button (click)="removerLinha(i)" class="bg-red-500 text-white px-2 rounded">
+        Remover
+      </button>
+    </div>
+  
+    <button (click)="adicionarLinha()" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+      Adicionar Linha
+    </button>
+    <button (click)="gerarObjeto()" class="bg-green-600 text-white px-4 py-2 rounded">
+      Gerar
+    </button>
+    <button (click)="gerarExemplo()" class="bg-green-600 text-white px-4 py-2 rounded">
+      Exemplo
+    </button>
+  
+    <div *ngIf="producaoFinal?.length" class="mt-4">
+      <h3 class="text-lg font-semibold mb-2">Produção Gerada:</h3>
+      <table class="table-auto w-full border border-gray-300">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border px-4 py-2">Mensagem</th>
+            <th class="border px-4 py-2">Pilha</th>
+            <th class="border px-4 py-2">Saída</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let passo of producaoFinal; let i = index">
+            <tr *ngIf="i < producaoFinal.length - 1">
+              <td class="border px-4 py-2">{{ passo.mensagem }}</td>
+              <td class="border px-4 py-2">{{ passo.pilha }}</td>
+              <td class="border px-4 py-2">{{ passo.saida }}</td>
+            </tr>
+            <tr *ngIf="i === producaoFinal.length - 1">
+              <td class="border px-4 py-2 text-center font-semibold" colspan="3">
+                {{ passo.mensagem }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
