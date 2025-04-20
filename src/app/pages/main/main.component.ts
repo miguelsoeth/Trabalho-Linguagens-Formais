@@ -35,7 +35,7 @@ export class MainComponent {
       ['S->0A,1S,2S', 'A->0A,1S,2S,~'],
       ['S->aSb,ab'],
       ['S->0S,1S,~'],
-      ['S->aA,a','A->aB,b', 'B->Sb,~']
+      ['S->aA','A->bB,~', 'B->aA']
     ];
   
     const index = Math.floor(Math.random() * exemplos.length);
