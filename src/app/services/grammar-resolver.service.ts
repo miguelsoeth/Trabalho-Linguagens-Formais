@@ -17,12 +17,12 @@ export class GrammarResolverService {
     }
 
     const producaoInicial = this.getProducaoAleatoria(gramatica[inicial]);
-    for (let i = producaoInicial.length - 1; i >= 0; i--) {
+    for (let i = 0; i < producaoInicial.length; i++) {
       pilha.push(producaoInicial[i]);
-    }
+    }    
     passos.push({
       mensagem: `Inicial: S → ${producaoInicial}`,
-      pilha: `[${[...pilha].reverse().join(', ')}]`,
+      pilha: `[${[...pilha].join(', ')}]`,
       saida: `[${output.join('')}]`
     });
 
@@ -34,13 +34,13 @@ export class GrammarResolverService {
           output.push(simbolo);
           passos.push({
             mensagem: `Elemento terminal '${simbolo}' adicionado à saída`,
-            pilha: `[${[...pilha].reverse().join(', ')}]`,
+            pilha: `[${[...pilha].join(', ')}]`,
             saida: `[${output.join('')}]`
           });
         } else {
           passos.push({
             mensagem: `Elemento terminal vazio (~) removido`,
-            pilha: `[${[...pilha].reverse().join(', ')}]`,
+            pilha: `[${[...pilha].join(', ')}]`,
             saida: `[${output.join('')}]`
           });
         }
@@ -56,7 +56,7 @@ export class GrammarResolverService {
         }
         passos.push({
           mensagem: `Elemento '${simbolo}' trocado por '${producao}'`,
-          pilha: `[${[...pilha].reverse().join(', ')}]`,
+          pilha: `[${[...pilha].join(', ')}]`,
           saida: `[${output.join('')}]`
         });
       } else {
